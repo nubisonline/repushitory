@@ -1,0 +1,5 @@
+This is repushitory, a Ruby script that deploys the latest version of your code to your production server.
+
+A different location can be chosen for different branches (development/stable).
+
+This program is open source, but not entirely free. See LICENSE for more information.

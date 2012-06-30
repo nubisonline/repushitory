@@ -1,0 +1,26 @@
+/* This file should be in ~/.repushitory/ 
+ *
+ * It defines repositories on which actions should be taken.
+ * */
+{
+	"repositories": [
+		{
+			"owner": "owner",
+			"repo": "repository",
+			"actions": [
+				{
+					"branch": "master",
+					"folder": "src",
+					"destination": {
+						"server": "servername", 
+						//See servers.json
+						"path": "/public_html/" 
+						//Path to change to for this 
+						// action (after going to the 
+						// global path in servers.json)
+					}
+				}
+			]
+		}
+	]
+}

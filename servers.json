@@ -1,0 +1,16 @@
+/* This file should be in ~/.repushitory/ 
+ *
+ * It defines servers that can be used for a file upload
+ * */
+{
+	"servers": [
+		{
+			"name": "servername", //Server name
+			"host": "host.com", //FTP host
+			"user": "u",
+			"pass": "p",
+			"path": "/public_html/" //Path to change to before 
+						// doing anything
+		}
+	]
+}

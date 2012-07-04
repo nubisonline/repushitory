@@ -1,8 +1,8 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 require 'socket'
-require 'json'
 require 'fileutils'
 require 'rubygems'
+require 'json'
 require 'git'
 
 

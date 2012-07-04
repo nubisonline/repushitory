@@ -1,6 +1,6 @@
 def upload(ftp)
 	Dir.foreach(".") do |node|
-		next if node == '.' or node == '..'
+		next if node == '.' or node == '..' or node == '.git'
 		
 		if(File.directory?(node))
 			begin

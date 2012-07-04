@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require 'socket'
+require 'net/ftp'
 require 'fileutils'
 require 'rubygems'
 require 'json'
@@ -66,12 +67,34 @@ while (session = webserver.accept)
 			if(repository["owner"] == owner && repository["repo"] == repo)
 				#Repo is in the config file, take action
 				connection = "git@github.com:" + owner + "/" + repo + ".git"
-				repository = Git.clone(connection, repo)
-				repository.checkout(repository.branch(branch))
+				git_repository = Git.clone(connection, repo)
 
 				Dir.chdir(repo)
 
-				#Upload files to the deployment server
+				repository["actions"].each do |action|
+					if(action["branch"] == branch)
+						git_repository.checkout(git_repository.branch(branch))
+						
+						server = nil
+						servers["servers"].each do |server|
+							destination = action["destination"]
+							if(server["name"] == destination["server"])
+								#We should abstract from this
+								ftp = Net::FTP.new
+								ftp.passive = true
+								ftp.connect(server["host"])
+								ftp.login(server["user"],server["pass"])
+								ftp.chdir(server["path"])
+								ftp.chdir(action["folder"])
+								
+								#Recursively upload the repo
+
+								puts ftp.last_response
+								ftp.quit
+							end
+						end
+					end
+				end
 
 				Dir.chdir("..")
 				FileUtils.rm_rf(repo)

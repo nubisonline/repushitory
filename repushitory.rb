@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'socket'
 require 'net/ftp'
+require 'cgi'
 require 'fileutils'
 require 'rubygems'
 require 'json'
@@ -57,7 +58,8 @@ while (session = webserver.accept)
 	session.print "HTTP/1.1 200/OK\nContent-type:text/html\n\n"
 	begin
 		#Parse payload
-		push = JSON.parse(content[8..-1])
+		payload = CGI::unescape(content[8..-1])
+		push = JSON.parse(payload)
 		ref = push["ref"]
 		repo = push["repository"]["name"]
 		owner = push["repository"]["owner"]["name"]

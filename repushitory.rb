@@ -41,7 +41,7 @@ if(config.nil? || servers.nil?)
 end
 
 #Set up listening server
-webserver = TCPServer.new('127.0.0.1', 3210)
+webserver = TCPServer.new('0.0.0.0', 3210)
 while (session = webserver.accept)
 	contentlength = 0
 	while (buff = session.gets)

@@ -6,12 +6,15 @@ require 'rubygems'
 require 'json'
 require 'git'
 
+load 'upload.rb'
+
 
 #Set up folders and configuration
 config = nil
 servers = nil
 
 progdir = File.join(Dir.home, ".repushitory")
+repodir = File.join(progdir, "repos")
 
 if(File.exists?(progdir))
 	Dir.chdir(progdir)
@@ -60,7 +63,7 @@ while (session = webserver.accept)
 		owner = push["repository"]["owner"]["name"]
 		branch = ref.split("/").last
 
-		Dir.chdir("repos")
+		Dir.chdir(repodir)
 
 		#Check config files for match
 		config["repositories"].each do |repository|
@@ -85,18 +88,18 @@ while (session = webserver.accept)
 								ftp.connect(server["host"])
 								ftp.login(server["user"],server["pass"])
 								ftp.chdir(server["path"])
-								ftp.chdir(action["folder"])
+								ftp.chdir(destination["path"])
+								Dir.chdir(action["folder"])
 								
-								#Recursively upload the repo
+								upload(ftp)
 
-								puts ftp.last_response
 								ftp.quit
 							end
 						end
 					end
 				end
 
-				Dir.chdir("..")
+				Dir.chdir(repodir)
 				FileUtils.rm_rf(repo)
 			end
 		end

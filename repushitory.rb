@@ -57,7 +57,7 @@ while (session = webserver.accept)
 	session.print "HTTP/1.1 200/OK\nContent-type:text/html\n\n"
 	begin
 		#Parse payload
-		push = JSON.parse(content)
+		push = JSON.parse(content[8..-1])
 		ref = push["ref"]
 		repo = push["repository"]["name"]
 		owner = push["repository"]["owner"]["name"]

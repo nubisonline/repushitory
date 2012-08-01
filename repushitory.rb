@@ -3,6 +3,7 @@ require 'socket'
 require 'net/ftp'
 require 'cgi'
 require 'fileutils'
+require 'logger'
 require 'rubygems'
 require 'json'
 require 'git'
@@ -41,6 +42,16 @@ if(config.nil? || servers.nil?)
 	Process.exit(1)
 end
 
+#Set up logging
+logger = nil
+if(config["logfile"] != "")
+	logger = Logger.new(config["logfile"])
+else
+	logger = Logger.new(STDOUT)
+end
+
+logger.info("Repushitory starting")
+
 #Set up listening server
 webserver = TCPServer.new('0.0.0.0', 3210)
 while (session = webserver.accept)
@@ -66,6 +77,8 @@ while (session = webserver.accept)
 		branch = ref.split("/").last
 
 		Dir.chdir(repodir)
+
+		logger.info("Got request for " + owner + "/" + repo + "/" + branch)
 
 		#Check config files for match
 		config["repositories"].each do |repository|

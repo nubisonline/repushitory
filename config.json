@@ -22,5 +22,8 @@
 				}
 			]
 		}
-	]
+	],
+	"logfile": ""
+	//The file to write log to
+	//If empty, stdout
 }

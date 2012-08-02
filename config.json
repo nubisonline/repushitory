@@ -18,7 +18,17 @@
 						//Path to change to for this 
 						// action (after going to the 
 						// global path in servers.json)
-					}
+					},
+					"variables": [
+						{
+							"name": "#APPID#",
+							"value": "01234"
+						},
+						{
+							"name": "#APPSECRET#",
+							"value": "secret"
+						}
+					]
 				}
 			]
 		}

@@ -113,7 +113,7 @@ while (session = webserver.accept)
 								ftp.chdir(destination["path"])
 								Dir.chdir(action["folder"])
 								
-								upload(ftp)
+								upload(ftp, action["variables"])
 
 								ftp.quit
 							end

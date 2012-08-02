@@ -32,7 +32,7 @@ def upload(ftp, variables)
 				if(variables.count > 0)
 					textfile = file.read
 					variables.each do |var|
-						textfile.gsub(var["name"], var["secret"])
+						textfile.gsub(var["name"], var["value"])
 					end
 					file.close
 					file = File.new(node, "w")

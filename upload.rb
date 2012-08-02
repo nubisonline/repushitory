@@ -38,7 +38,7 @@ def upload(ftp, variables)
 					file = File.new(node, "w")
 					file.print(textfile)
 				end
-				ftp.puttestfile(node)
+				ftp.puttextfile(node)
 			end
 			file.close
 		end

@@ -33,8 +33,9 @@ def upload(ftp, variables, ignore, less, compiler)
 				file.close
 				
 				if(less and File.extname(file).eql? ".less")
-					system(compiler + " " + node)
-					node = File.basename(node, ".less") + ".css"
+					cssname = File.basename(node, ".less") + ".css"
+					system(compiler + " " + node + " " + cssname)
+					node = cssname
 				end
 				
 				ftp.puttextfile(node)

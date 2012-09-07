@@ -119,7 +119,7 @@ while (session = webserver.accept)
 									variables = action["variables"]
 								end
 								
-								ingore = Array.new
+								ignore = Array.new
 								if(action.has_key?("ignore"))
 									ignore = action["ignore"]
 								end

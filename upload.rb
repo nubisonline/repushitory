@@ -1,4 +1,4 @@
-def upload(ftp, variables, ignore, less)
+def upload(ftp, variables, ignore, less, compiler)
 	Dir.foreach(".") do |node|
 		next if node == '.' or node == '..' or node == '.git' or ignore.include?(node)
 
@@ -33,7 +33,7 @@ def upload(ftp, variables, ignore, less)
 				file.close
 				
 				if(less and File.extname(file).eql? ".less")
-					system(configs.config["lessc"] + " " + node)
+					system(compiler + " " + node)
 					node = File.basename(node, ".less") + ".css"
 				end
 				

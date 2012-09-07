@@ -1,6 +1,6 @@
-def upload(ftp, variables)
+def upload(ftp, variables, ignore, less)
 	Dir.foreach(".") do |node|
-		next if node == '.' or node == '..' or node == '.git'
+		next if node == '.' or node == '..' or node == '.git' or ignore.contains?(node)
 
 		if(File.directory?(node))
 			begin
@@ -31,6 +31,11 @@ def upload(ftp, variables)
 					file.print(textfile)
 				end
 				file.close
+				
+				if(less and File.extname(file).eql? ".less")
+					system(configs.config["lessc"] + " " + node)
+				end
+				
 				ftp.puttextfile(node)
 			end
 		end

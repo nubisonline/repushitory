@@ -114,7 +114,17 @@ while (session = webserver.accept)
 								ftp.chdir(destination["path"])
 								Dir.chdir(action["folder"])
 								
-								upload(ftp, action["variables"])
+								variables = []
+								if(action.include?("variables"))
+									variables = action["variables"]
+								end
+								
+								ingore = []
+								if(action.includes?("ignore"))
+									ignore = action["ignore"]
+								end
+								
+								upload(ftp, variables, ignore, repository["less"])
 
 								ftp.quit
 							end

@@ -115,12 +115,12 @@ while (session = webserver.accept)
 								Dir.chdir(action["folder"])
 								
 								variables = []
-								if(action.include?("variables"))
+								if(action.has_key?("variables"))
 									variables = action["variables"]
 								end
 								
 								ingore = []
-								if(action.includes?("ignore"))
+								if(action.has_key?("ignore"))
 									ignore = action["ignore"]
 								end
 								

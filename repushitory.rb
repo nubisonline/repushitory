@@ -138,6 +138,8 @@ while (session = webserver.accept)
 		end
 
 		Dir.chdir("..")
+		
+		logger.info("Done with request for " + owner + "/" + repo + "/" + branch)
 	end
 	session.close
 end

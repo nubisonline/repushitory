@@ -8,6 +8,7 @@ require 'rubygems'
 require 'json'
 require 'git'
 require 'listen'
+require 'ptools'
 
 load 'upload.rb'
 load 'watchconf.rb'

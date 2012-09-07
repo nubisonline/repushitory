@@ -34,6 +34,7 @@ def upload(ftp, variables, ignore, less)
 				
 				if(less and File.extname(file).eql? ".less")
 					system(configs.config["lessc"] + " " + node)
+					node = File.basename(node, ".less") + ".css"
 				end
 				
 				ftp.puttextfile(node)

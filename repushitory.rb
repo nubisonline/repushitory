@@ -114,12 +114,12 @@ while (session = webserver.accept)
 								ftp.chdir(destination["path"])
 								Dir.chdir(action["folder"])
 								
-								variables = []
+								variables = Array.new
 								if(action.has_key?("variables"))
 									variables = action["variables"]
 								end
 								
-								ingore = []
+								ingore = Array.new
 								if(action.has_key?("ignore"))
 									ignore = action["ignore"]
 								end

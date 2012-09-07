@@ -126,7 +126,7 @@ while (session = webserver.accept)
 								
 								compiler = ""
 								if(configs.config.has_key?("lessc"))
-									compiler configs.config["lessc"]
+									compiler = configs.config["lessc"]
 								end
 								
 								upload(ftp, variables, ignore, repository["less"], compiler)

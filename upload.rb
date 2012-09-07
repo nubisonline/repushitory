@@ -1,4 +1,3 @@
-# Add binary test to File. Method by of Alex Gutteridge.
 def upload(ftp, variables)
 	Dir.foreach(".") do |node|
 		next if node == '.' or node == '..' or node == '.git'

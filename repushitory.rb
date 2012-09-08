@@ -129,7 +129,7 @@ while (session = webserver.accept)
 									compiler = configs.config["lessc"]
 								end
 								
-								less = repository.hash_key?("less")
+								less = repository.has_key?("less")
 								
 								upload(ftp, variables, ignore, less, compiler)
 

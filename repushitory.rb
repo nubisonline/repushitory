@@ -114,12 +114,12 @@ while (session = webserver.accept)
 								ftp.chdir(destination["path"])
 								Dir.chdir(action["folder"])
 								
-								variables = Array.new
+								variables = []
 								if(action.has_key?("variables"))
 									variables = action["variables"]
 								end
 								
-								ignore = Array.new
+								ignore = []
 								if(action.has_key?("ignore"))
 									ignore = action["ignore"]
 								end
@@ -129,7 +129,9 @@ while (session = webserver.accept)
 									compiler = configs.config["lessc"]
 								end
 								
-								upload(ftp, variables, ignore, repository["less"], compiler)
+								less = repository.hash_key?("less")
+								
+								upload(ftp, variables, ignore, less, compiler)
 
 								ftp.quit
 							end

@@ -10,7 +10,7 @@ def upload(ftp, variables, ignore, less, compiler)
 			ftp.chdir(node)
 			Dir.chdir(node)
 
-			upload(ftp, variables)
+			upload(ftp, variables, ignore, less, compiler)
 
 			ftp.chdir("..")
 			Dir.chdir("..")

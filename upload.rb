@@ -34,7 +34,7 @@ def upload(ftp, variables, ignore, less, compiler)
 				
 				if(less and File.extname(file).eql? ".less")
 					cssname = File.basename(node, ".less") + ".css"
-					system(compiler + " " + node + " " + cssname)
+					`#{compiler} #{node} > #{cssname}`
 					node = cssname
 				end
 				

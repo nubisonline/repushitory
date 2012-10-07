@@ -92,14 +92,26 @@ while (session = webserver.accept)
 		configs.config["repositories"].each do |repository|
 			if(repository["owner"] == owner && repository["repo"] == repo)
 				#Repo is in the config file, take action
+
+				if(not File.exists?(owner))
+					Dir.mkdir(owner, 0700)
+				end
+				Dir.chdir(owner)
+				
 				connection = "git@github.com:" + owner + "/" + repo + ".git"
-				git_repository = Git.clone(connection, repo)
+				
+				if(not File.exists?(repo + "/.git"))
+					git_repository = Git.clone(connection, repo)
+				else
+					git_repository = Git.open(repo)
+				end
 
 				Dir.chdir(repo)
 
 				repository["actions"].each do |action|
 					if(action["branch"] == branch)
 						git_repository.checkout(git_repository.branch(branch))
+						git_repository.pull('origin', 'origin/' + branch, 'pull ' + branch)
 						
 						server = nil
 						configs.servers["servers"].each do |server|
@@ -140,7 +152,6 @@ while (session = webserver.accept)
 				end
 
 				Dir.chdir(repodir)
-				FileUtils.rm_rf(repo)
 			end
 		end
 

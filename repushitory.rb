@@ -8,8 +8,8 @@ require 'rubygems'
 require 'json'
 require 'git'
 require 'listen'
-require 'ptools'
 
+load 'binary.rb'
 load 'upload.rb'
 load 'watchconf.rb'
 load 'config.class.rb'
@@ -113,6 +113,23 @@ while (session = webserver.accept)
 						git_repository.checkout(git_repository.branch(branch))
 						git_repository.pull('origin', 'origin/' + branch, 'pull ' + branch)
 						
+						commits = push["commits"]
+						to_upload = []
+						to_remove = []
+						commits.each do |commit|
+							commit["added"].each do |file|
+								to_remove.delete(file) if to_remove.include?(file)
+								to_upload.push(file) unless to_upload.include?(file)
+							end
+							commit["modified"].each do |file|
+								to_upload.push(file) unless to_upload.include?(file)
+							end
+							commit["removed"].each do |file|
+								to_upload.delete(file) if to_upload.include?(file)
+								to_remove.push(file) unless to_remove.include?(file)
+							end
+						end
+						
 						server = nil
 						configs.servers["servers"].each do |server|
 							destination = action["destination"]
@@ -143,7 +160,7 @@ while (session = webserver.accept)
 								
 								less = repository.has_key?("less")
 								
-								upload(ftp, variables, ignore, less, compiler)
+								upload(to_upload, to_remove, ftp, variables, ignore, less, compiler)
 
 								ftp.quit
 							end
